@@ -28,10 +28,17 @@ export default function Home() {
           transition={{ duration: 1.4 }}
           className="absolute inset-0"
         >
+          {/* Imagen móvil */}
+          <img
+            src="/quiero_que_eso_202604092010.png"
+            alt="Sombrero Premium"
+            className="block md:hidden h-full w-full object-cover object-center"
+          />
+          {/* Imagen desktop */}
           <img
             src="/Sinaloa 20x lana boliviana MORCON Texana.png"
             alt="Sombrero Premium"
-            className="h-full w-full object-cover"
+            className="hidden md:block h-full w-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-black/50" />
         </motion.div>
@@ -41,24 +48,25 @@ export default function Home() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.9 }}
-          className="absolute top-10 left-1/2 z-10 -translate-x-1/2 flex flex-col items-center gap-2"
+          className="absolute top-10 inset-x-0 z-10 flex flex-col items-center gap-2 px-4 text-center"
         >
-          <img src="/logo.png" alt="Estilo Vaquero" className="h-20 w-auto md:h-28 drop-shadow-2xl" />
+          <img src="/logo.png" alt="Estilo Vaquero" className="h-20 w-auto md:h-28 drop-shadow-2xl mx-auto" />
           <span className="font-serif text-xs uppercase tracking-[0.35em] text-white/70 drop-shadow-md">
             Artesanal · México
           </span>
         </motion.div>
 
         {/* Botón de compra centrado abajo */}
-        <div className="absolute bottom-14 left-1/2 z-10 -translate-x-1/2 flex flex-col items-center gap-5">
+        <div className="absolute bottom-14 inset-x-0 z-10 flex flex-col items-center gap-5 px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.8 }}
+            className="flex justify-center w-full"
           >
             <Link
               href="/shop"
-              className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-white/30 bg-white/10 px-8 py-4 text-white backdrop-blur-md transition-all duration-500 hover:bg-white hover:text-[#3d2c29] hover:shadow-2xl"
+              className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-white/30 bg-white/10 px-8 py-4 text-white backdrop-blur-md transition-all duration-500 hover:bg-white hover:text-[#3d2c29] hover:shadow-2xl whitespace-nowrap"
             >
               <span className="font-serif text-base font-semibold tracking-widest uppercase">Ver Catálogo</span>
               <ShoppingBag className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -70,6 +78,7 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: [0, 1, 0] }}
             transition={{ delay: 2, duration: 2, repeat: Infinity }}
+            className="flex justify-center"
           >
             <svg className="h-5 w-5 text-white/60" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
