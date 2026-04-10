@@ -4,6 +4,7 @@ import { Geist, Geist_Mono, Playfair_Display } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { CartProvider } from "@/contexts/cart-context"
 import { LanguageProvider } from "@/contexts/language-context"
+import { AuthProvider } from "@/contexts/auth-context"
 import { MenuIsland } from "@/components/menu-island"
 import { LanguageSwitcher } from "@/components/language-switcher"
 import { Footer } from "@/components/footer"
@@ -36,16 +37,18 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`font-sans antialiased`}>
-        <LanguageProvider>
-          <CartProvider>
-            <LanguageSwitcher />
-            {children}
-            <Footer />
-            <MenuIsland />
-            <Toaster position="top-center" richColors />
-            <Analytics />
-          </CartProvider>
-        </LanguageProvider>
+        <AuthProvider>
+          <LanguageProvider>
+            <CartProvider>
+              <LanguageSwitcher />
+              {children}
+              <Footer />
+              <MenuIsland />
+              <Toaster position="top-center" richColors />
+              <Analytics />
+            </CartProvider>
+          </LanguageProvider>
+        </AuthProvider>
       </body>
     </html>
   )

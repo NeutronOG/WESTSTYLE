@@ -12,6 +12,8 @@ export interface Product {
   featured: boolean
   material?: string
   care?: string
+  descriptionEn?: string
+  careEn?: string
 }
 
 export interface CartItem {

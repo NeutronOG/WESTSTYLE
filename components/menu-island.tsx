@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from "motion/react"
-import { Home, ShoppingBag, ShoppingCart, Info, X, Mail } from "lucide-react"
+import { Home, ShoppingBag, ShoppingCart, Info, X, Mail, LogIn, LogOut, User } from "lucide-react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faHatCowboy } from "@fortawesome/free-solid-svg-icons"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useCart } from "@/contexts/cart-context"
+import { useAuth } from "@/contexts/auth-context"
+import { useRouter } from "next/navigation"
 
 const WHATSAPP_NUMBER = "5214778155183"
 const WHATSAPP_MESSAGE = "Hola! Me interesa conocer más sobre sus sombreros 🎩"
@@ -34,6 +36,8 @@ export function MenuIsland() {
   const [isVisible, setIsVisible] = useState(false)
   const pathname = usePathname()
   const { totalItems } = useCart()
+  const { user, signOut } = useAuth()
+  const router = useRouter()
 
   useEffect(() => {
     const isHome = pathname === "/"
@@ -222,6 +226,52 @@ export function MenuIsland() {
                     <div className="h-2 w-2 -translate-y-1 rotate-45 bg-[#3d2c29]" />
                   </motion.div>
                 </a>
+              </motion.div>
+
+              <div className="mx-1 h-10 w-px bg-gradient-to-b from-transparent via-[#d4a5a5]/40 to-transparent" />
+
+              {/* Auth */}
+              <motion.div
+                initial={{ scale: 0, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                transition={{ delay: (menuItems.length + 3) * 0.08, type: "spring", stiffness: 400, damping: 25 }}
+              >
+                {user ? (
+                  <button
+                    onClick={() => { signOut(); setIsExpanded(false); router.push("/") }}
+                    className="group relative flex h-14 w-14 items-center justify-center rounded-2xl text-[#3d2c29] transition-all duration-300 hover:bg-red-50"
+                  >
+                    <LogOut className="h-5 w-5 transition-transform group-hover:scale-110 group-hover:text-red-500" />
+                    <motion.div
+                      className="absolute -top-12 flex flex-col items-center"
+                      initial={{ opacity: 0, y: 10 }}
+                      whileHover={{ opacity: 1, y: 0 }}
+                    >
+                      <span className="whitespace-nowrap rounded-xl bg-[#3d2c29] px-3 py-1.5 text-xs font-medium text-white shadow-lg">
+                        {user.email?.split("@")[0]}
+                      </span>
+                      <div className="h-2 w-2 -translate-y-1 rotate-45 bg-[#3d2c29]" />
+                    </motion.div>
+                  </button>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="group relative flex h-14 w-14 items-center justify-center rounded-2xl text-[#3d2c29] transition-all duration-300 hover:bg-[#d4a5a5]/15"
+                    onClick={() => setIsExpanded(false)}
+                  >
+                    <LogIn className="h-5 w-5 transition-transform group-hover:scale-110 group-hover:text-[#d4a5a5]" />
+                    <motion.div
+                      className="absolute -top-12 flex flex-col items-center"
+                      initial={{ opacity: 0, y: 10 }}
+                      whileHover={{ opacity: 1, y: 0 }}
+                    >
+                      <span className="whitespace-nowrap rounded-xl bg-[#3d2c29] px-3 py-1.5 text-xs font-medium text-white shadow-lg">
+                        Login
+                      </span>
+                      <div className="h-2 w-2 -translate-y-1 rotate-45 bg-[#3d2c29]" />
+                    </motion.div>
+                  </Link>
+                )}
               </motion.div>
 
               <button

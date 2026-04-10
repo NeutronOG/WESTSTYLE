@@ -1,8 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "motion/react"
 import { useCart } from "@/contexts/cart-context"
+import { useAuth } from "@/contexts/auth-context"
+import { useLanguage } from "@/contexts/language-context"
 import { CreditCard, Lock, CheckCircle } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { createOrder } from "@/lib/orders"
@@ -12,7 +14,15 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 
 export default function CheckoutPage() {
   const { items, totalPrice, clearCart } = useCart()
+  const { user, loading: authLoading } = useAuth()
+  const { locale } = useLanguage()
   const router = useRouter()
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push("/login?redirect=/checkout")
+    }
+  }, [user, authLoading, router])
   const [isProcessing, setIsProcessing] = useState(false)
   const [isComplete, setIsComplete] = useState(false)
   const [orderError, setOrderError] = useState<string | null>(null)

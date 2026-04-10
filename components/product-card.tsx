@@ -94,7 +94,7 @@ export function ProductCard({ product, index }: ProductCardProps) {
           </div>
 
           <p className="mb-4 line-clamp-2 text-sm text-[#3d2c29]/70">
-            {product.description}
+            {locale === "en" && product.descriptionEn ? product.descriptionEn : product.description}
           </p>
 
           <div className="flex items-center justify-between">

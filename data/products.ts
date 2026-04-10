@@ -15,7 +15,9 @@ export const products: Product[] = [
     inStock: true,
     featured: true,
     material: "Lana Boliviana 20X",
-    care: "Limpiar con cepillo suave. Evitar humedad excesiva."
+    care: "Limpiar con cepillo suave. Evitar humedad excesiva.",
+    descriptionEn: "Bolivian wool texana, 20X quality, cardboard box included. Crown: 11 cm, Brim: 9 cm",
+    careEn: "Clean with soft brush. Avoid excessive moisture."
   },
   {
     id: 2,
@@ -30,7 +32,9 @@ export const products: Product[] = [
     inStock: true,
     featured: true,
     material: "Lana Boliviana 20X",
-    care: "Limpiar con cepillo suave. Evitar humedad excesiva."
+    care: "Limpiar con cepillo suave. Evitar humedad excesiva.",
+    descriptionEn: "Bolivian wool texana, 20X quality, Crystal Grey, cardboard box included. Crown: 11 cm, Brim: 9 cm",
+    careEn: "Clean with soft brush. Avoid excessive moisture."
   },
   {
     id: 3,
@@ -45,7 +49,9 @@ export const products: Product[] = [
     inStock: true,
     featured: false,
     material: "Lana Boliviana 20X",
-    care: "Limpiar con cepillo suave. Evitar humedad excesiva."
+    care: "Limpiar con cepillo suave. Evitar humedad excesiva.",
+    descriptionEn: "Bolivian wool texana, 20X quality, Brown color, cardboard box included. Crown: 11 cm, Brim: 9 cm",
+    careEn: "Clean with soft brush. Avoid excessive moisture."
   },
   {
     id: 7,
@@ -60,7 +66,9 @@ export const products: Product[] = [
     inStock: true,
     featured: false,
     material: "Lana Boliviana 20X",
-    care: "Limpiar con cepillo suave. Evitar humedad excesiva."
+    care: "Limpiar con cepillo suave. Evitar humedad excesiva.",
+    descriptionEn: "Bolivian wool texana, 20X quality, Este Oeste cut, cardboard box included. Crown: 11 cm, Brim: 11 cm",
+    careEn: "Clean with soft brush. Avoid excessive moisture."
   },
   {
     id: 8,
@@ -75,7 +83,9 @@ export const products: Product[] = [
     inStock: true,
     featured: false,
     material: "Lana Boliviana 20X",
-    care: "Limpiar con cepillo suave. Evitar humedad excesiva."
+    care: "Limpiar con cepillo suave. Evitar humedad excesiva.",
+    descriptionEn: "Bolivian wool texana, 20X quality, Orange color, Este Oeste cut, cardboard box included. Crown: 11 cm, Brim: 11 cm",
+    careEn: "Clean with soft brush. Avoid excessive moisture."
   },
   {
     id: 9,
@@ -90,7 +100,9 @@ export const products: Product[] = [
     inStock: true,
     featured: false,
     material: "Lana Boliviana 20X",
-    care: "Limpiar con cepillo suave. Evitar humedad excesiva."
+    care: "Limpiar con cepillo suave. Evitar humedad excesiva.",
+    descriptionEn: "Bolivian wool texana, 20X quality, Brasil Red, cardboard box included. Crown: 11 cm, Brim: 9 cm",
+    careEn: "Clean with soft brush. Avoid excessive moisture."
   },
   {
     id: 11,
@@ -105,7 +117,9 @@ export const products: Product[] = [
     inStock: true,
     featured: true,
     material: "Conejo 200X con pluma plata alemana",
-    care: "Limpiar con cepillo suave. Guardar en lugar seco."
+    care: "Limpiar con cepillo suave. Guardar en lugar seco.",
+    descriptionEn: "Fine 200X rabbit felt texana, cardboard box included, custom German silver feather. Crown: 11 cm, Brim: 9 cm",
+    careEn: "Clean with soft brush. Store in a dry place."
   },
   {
     id: 10,
@@ -120,7 +134,9 @@ export const products: Product[] = [
     inStock: true,
     featured: true,
     material: "Castor 500X con pluma plata alemana",
-    care: "Limpiar con cepillo suave. Guardar en estuche."
+    care: "Limpiar con cepillo suave. Guardar en estuche.",
+    descriptionEn: "Fine 500X beaver felt texana, travel case included, German silver feather, certificate of authenticity. Crown: 11 cm, Brim: 9 cm",
+    careEn: "Clean with soft brush. Store in case."
   },
 
   // ── TOMBSTONE ────────────────────────────────────────────
@@ -137,7 +153,9 @@ export const products: Product[] = [
     inStock: true,
     featured: true,
     material: "Lana Boliviana 20X",
-    care: "Limpiar con cepillo suave. Evitar humedad excesiva."
+    care: "Limpiar con cepillo suave. Evitar humedad excesiva.",
+    descriptionEn: "Roper cut Tombstone texana, 20X quality, cardboard box included. Crown: 11 cm, Brim: 11 cm",
+    careEn: "Clean with soft brush. Avoid excessive moisture."
   },
   {
     id: 20,
@@ -152,7 +170,9 @@ export const products: Product[] = [
     inStock: true,
     featured: false,
     material: "Lana Boliviana 20X",
-    care: "Limpiar con cepillo suave. Evitar humedad excesiva."
+    care: "Limpiar con cepillo suave. Evitar humedad excesiva.",
+    descriptionEn: "Este Oeste cut Tombstone texana, 20X quality, cardboard box included. Crown: 11 cm, Brim: 11 cm",
+    careEn: "Clean with soft brush. Avoid excessive moisture."
   },
   {
     id: 22,
@@ -167,7 +187,9 @@ export const products: Product[] = [
     inStock: true,
     featured: false,
     material: "Lana Boliviana 20X",
-    care: "Limpiar con cepillo suave. Evitar humedad excesiva."
+    care: "Limpiar con cepillo suave. Evitar humedad excesiva.",
+    descriptionEn: "Viejón cut Tombstone texana, 20X quality, cardboard box included. Crown: 12 cm, Brim: 10 cm",
+    careEn: "Clean with soft brush. Avoid excessive moisture."
   },
   {
     id: 23,
@@ -182,7 +204,9 @@ export const products: Product[] = [
     inStock: true,
     featured: false,
     material: "Lana 1,000X",
-    care: "Limpiar con cepillo suave."
+    care: "Limpiar con cepillo suave.",
+    descriptionEn: "Tombstone hat, 1,000X quality. Crown: 11 cm, Brim: 9 cm",
+    careEn: "Clean with soft brush."
   },
   {
     id: 12,
@@ -197,7 +221,9 @@ export const products: Product[] = [
     inStock: true,
     featured: true,
     material: "Lana 5,000X",
-    care: "Limpiar con cepillo suave."
+    care: "Limpiar con cepillo suave.",
+    descriptionEn: "Tombstone hat, 5,000X quality. Crown: 11 cm, Brim: 9 cm",
+    careEn: "Clean with soft brush."
   },
   {
     id: 16,
@@ -212,7 +238,9 @@ export const products: Product[] = [
     inStock: true,
     featured: true,
     material: "Lana 10,000X tejida a mano",
-    care: "Limpiar con cepillo suave. Guardar en lugar seco."
+    care: "Limpiar con cepillo suave. Guardar en lugar seco.",
+    descriptionEn: "Handwoven Tombstone hat, 10,000X quality, artisan Shantung with certificate of authenticity",
+    careEn: "Clean with soft brush. Store in a dry place."
   },
 
   // ── LAREDO HATS (Colaboraciones) ─────────────────────────
@@ -229,7 +257,9 @@ export const products: Product[] = [
     inStock: true,
     featured: true,
     material: "Lana Fina 4X",
-    care: "Limpiar en seco. Proteger de la humedad."
+    care: "Limpiar en seco. Proteger de la humedad.",
+    descriptionEn: "Exclusive collaboration texana with Eden Muñoz, premium Laredo quality. Crown: 14 cm, Brim: 9 cm",
+    careEn: "Dry clean only. Protect from moisture."
   },
   {
     id: 17,
@@ -244,7 +274,9 @@ export const products: Product[] = [
     inStock: true,
     featured: true,
     material: "Lana Fina 4X",
-    care: "Limpiar en seco. Proteger de la humedad."
+    care: "Limpiar en seco. Proteger de la humedad.",
+    descriptionEn: "Exclusive collaboration texana with Luis R Conríquez, premium Laredo quality. Crown: 14 cm, Brim: 9 cm",
+    careEn: "Dry clean only. Protect from moisture."
   },
   {
     id: 18,
@@ -259,7 +291,9 @@ export const products: Product[] = [
     inStock: true,
     featured: true,
     material: "Lana Fina 4X",
-    care: "Limpiar en seco. Proteger de la humedad."
+    care: "Limpiar en seco. Proteger de la humedad.",
+    descriptionEn: "Exclusive collaboration texana with Carin Leon, premium Laredo quality. Crown: 14 cm, Brim: 9 cm",
+    careEn: "Dry clean only. Protect from moisture."
   },
 
   // ── ACCESORIOS ───────────────────────────────────────────
@@ -276,7 +310,9 @@ export const products: Product[] = [
     inStock: true,
     featured: true,
     material: "Hilo de Plata Ley 925",
-    care: "Guardar en lugar seco. Proteger de la humedad."
+    care: "Guardar en lugar seco. Proteger de la humedad.",
+    descriptionEn: "Hand-woven hat band on leather with 925 sterling silver thread",
+    careEn: "Store in a dry place. Protect from moisture."
   },
   {
     id: 25,
@@ -291,7 +327,9 @@ export const products: Product[] = [
     inStock: true,
     featured: false,
     material: "Plata Alemana",
-    care: "Guardar en lugar seco."
+    care: "Guardar en lugar seco.",
+    descriptionEn: "Decorative German silver feather for texanas, handcrafted finish",
+    careEn: "Store in a dry place."
   },
   {
     id: 26,
@@ -306,7 +344,9 @@ export const products: Product[] = [
     inStock: true,
     featured: false,
     material: "Tela bordada",
-    care: "Limpiar con paño seco."
+    care: "Limpiar con paño seco.",
+    descriptionEn: "Decorative inner lining with San Judas Tadeo image for texanas",
+    careEn: "Wipe with dry cloth."
   },
   {
     id: 15,
@@ -321,6 +361,8 @@ export const products: Product[] = [
     inStock: true,
     featured: false,
     material: "Espuma",
-    care: "Guardar en lugar seco."
+    care: "Guardar en lugar seco.",
+    descriptionEn: "Specialized cleaning foam for texana maintenance",
+    careEn: "Store in a dry place."
   }
 ]
