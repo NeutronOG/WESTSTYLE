@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "motion/react"
 import { useRouter } from "next/navigation"
 import { useCart } from "@/contexts/cart-context"
 import { useLanguage } from "@/contexts/language-context"
-import { ShoppingCart, Heart, ArrowLeft, Check, Star, Package, Shield, Truck, ChevronLeft, ChevronRight } from "lucide-react"
+import { ShoppingCart, Heart, ArrowLeft, Check, Star, Package, Shield, Truck, ChevronLeft, ChevronRight, X, Ruler } from "lucide-react"
 import { toast } from "sonner"
 import type { Product } from "@/types/product"
 import Link from "next/link"
@@ -20,6 +20,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const { locale, formatPrice } = useLanguage()
   const t = (es: string, en: string) => locale === "en" ? en : es
 
+  const [showSizeGuide, setShowSizeGuide] = useState(false)
+
   const [selectedSize, setSelectedSize] = useState(() =>
     product?.sizes?.length === 1 ? product.sizes[0] : ""
   )
@@ -29,6 +31,17 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const [quantity, setQuantity] = useState(1)
   const [isFavorite, setIsFavorite] = useState(false)
   const [activeImg, setActiveImg] = useState(0)
+
+  const SIZE_GUIDE = [
+    { mx: "53", usa: "6 5/8" },
+    { mx: "54", usa: "6 3/4" },
+    { mx: "55", usa: "6 7/8" },
+    { mx: "56", usa: "7" },
+    { mx: "57", usa: "7 1/8" },
+    { mx: "58", usa: "7 1/4" },
+    { mx: "59", usa: "7 3/8" },
+    { mx: "60", usa: "7 1/2" },
+  ]
 
   if (!product) {
     return (
@@ -67,6 +80,79 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
   return (
     <div className="min-h-screen overflow-y-auto bg-gradient-to-br from-[#f5ebe0] via-[#faf3ed] to-[#e8ddd0] pb-32">
+
+      {/* ── Size Guide Modal ── */}
+      <AnimatePresence>
+        {showSizeGuide && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+            onClick={() => setShowSizeGuide(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              onClick={e => e.stopPropagation()}
+              className="w-full max-w-sm rounded-3xl bg-[#faf3ed] p-8 shadow-2xl border-2 border-[#d4a5a5]/30"
+            >
+              {/* Header */}
+              <div className="mb-6 flex items-center justify-between">
+                <div>
+                  <h3 className="font-serif text-2xl font-bold text-[#3d2c29]">{t("Guía de Tallas", "Size Guide")}</h3>
+                  <p className="text-xs text-[#3d2c29]/50 tracking-widest uppercase mt-1">{t("Equivalencias", "Equivalences")}</p>
+                </div>
+                <button onClick={() => setShowSizeGuide(false)} className="flex h-9 w-9 items-center justify-center rounded-full bg-[#d4a5a5]/20 hover:bg-[#d4a5a5]/40 transition-colors">
+                  <X className="h-4 w-4 text-[#3d2c29]" />
+                </button>
+              </div>
+
+              {/* Table */}
+              <div className="overflow-hidden rounded-2xl border-2 border-[#d4a5a5]/30 mb-6">
+                <table className="w-full">
+                  <thead>
+                    <tr className="bg-[#3d2c29]">
+                      <th className="py-3 text-center font-serif text-sm font-bold text-[#d4a5a5] tracking-widest">{t("TALLA MÉX", "MEX SIZE")}</th>
+                      <th className="py-3 text-center font-serif text-sm font-bold text-[#d4a5a5] tracking-widest">{t("TALLA USA", "USA SIZE")}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {SIZE_GUIDE.map((row, i) => (
+                      <tr key={row.mx} className={i % 2 === 0 ? "bg-white/60" : "bg-[#f5ebe0]/60"}>
+                        <td className="py-3 text-center font-serif text-lg font-bold text-[#3d2c29]">{row.mx}</td>
+                        <td className="py-3 text-center font-serif text-lg font-bold text-[#3d2c29]">{row.usa}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Instructions */}
+              <div className="rounded-2xl bg-[#d4a5a5]/10 border border-[#d4a5a5]/30 p-4">
+                <p className="mb-3 font-serif text-sm font-bold text-[#3d2c29] uppercase tracking-wider">
+                  {t("Conoce tu talla en centímetros", "How to measure your size")}
+                </p>
+                <ul className="space-y-1.5">
+                  {[
+                    t("Utiliza una cinta métrica", "Use a measuring tape"),
+                    t("Mide alrededor de la cabeza", "Measure around your head"),
+                    t("Desde el centro de la frente", "Starting from the center of your forehead"),
+                    t("Por encima de las cejas", "Above your eyebrows"),
+                    t("Que la cinta ajuste pero no apriete", "Tape should fit snugly but not tight"),
+                  ].map((tip, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs text-[#3d2c29]/70">
+                      <span className="mt-0.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#d4a5a5]" />
+                      {tip}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div className="fixed top-12 right-12 text-5xl text-[#3d2c29] opacity-20 pointer-events-none select-none">✦</div>
       <div className="fixed bottom-24 left-16 text-4xl text-[#3d2c29] opacity-25 pointer-events-none select-none">✦</div>
 
@@ -210,9 +296,18 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
               {/* Size */}
               <div>
-                <label className="mb-3 block font-serif text-base font-semibold text-[#3d2c29]">
-                  {t("Talla", "Size")}
-                </label>
+                <div className="mb-3 flex items-center justify-between">
+                  <label className="font-serif text-base font-semibold text-[#3d2c29]">
+                    {t("Talla", "Size")}
+                  </label>
+                  <button
+                    onClick={() => setShowSizeGuide(true)}
+                    className="flex items-center gap-1 text-xs font-semibold text-[#d4a5a5] hover:text-[#3d2c29] transition-colors"
+                  >
+                    <Ruler className="h-3.5 w-3.5" />
+                    {t("Guía de tallas", "Size guide")}
+                  </button>
+                </div>
                 <div className="flex flex-wrap gap-2">
                   {product.sizes.map((size) => (
                     <motion.button
