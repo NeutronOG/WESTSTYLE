@@ -7,12 +7,14 @@ import Image from "next/image"
 import { ScrollReveal, ScrollRevealStagger, ScrollProgressBar } from "@/components/scroll-reveal"
 import { AnimatedCard } from "@/components/animated-card"
 import { InteractiveButton, HoverCard } from "@/components/gesture-demo"
+import { useLanguage } from "@/contexts/language-context"
 
 export default function Home() {
+  const { locale, formatPrice } = useLanguage()
   const bestSellers = [
-    { id: 10, name: "Castor 500X – Morcon", price: "$18,000", image: "/Los alegres del barranco 5000x TOMBSTONE Sombrero.png", sales: "150+ vendidos" },
-    { id: 11, name: "Conejo 200X – Morcon", price: "$8,000", image: "/Este Oeste- Gris Granito.png", sales: "120+ vendidos" },
-    { id: 12, name: "Sinaloa - Tombstone 5000X", price: "$3,800", image: "/Este oeste 5000x TOMBSTONE Sombrero.png", sales: "100+ vendidos" },
+    { id: 10, name: "Castor 500X – Morcon", priceMxn: 18000, image: "/Los alegres del barranco 5000x TOMBSTONE Sombrero.png", sales: 150 },
+    { id: 11, name: "Conejo 200X – Morcon", priceMxn: 8000, image: "/Este Oeste- Gris Granito.png", sales: 120 },
+    { id: 12, name: "Sinaloa Tombstone 5,000X", priceMxn: 3800, image: "/Este oeste 5000x TOMBSTONE Sombrero.png", sales: 100 },
   ]
 
   return (
@@ -52,7 +54,7 @@ export default function Home() {
         >
           <img src="/logo.png" alt="Estilo Vaquero" className="h-20 w-auto md:h-28 drop-shadow-2xl mx-auto" />
           <span className="font-serif text-xs uppercase tracking-[0.35em] text-white/70 drop-shadow-md">
-            Artesanal · México
+            {locale === "en" ? "Handcrafted · Mexico" : "Artesanal · México"}
           </span>
         </motion.div>
 
@@ -68,7 +70,7 @@ export default function Home() {
               href="/shop"
               className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-white/30 bg-white/10 px-8 py-4 text-white backdrop-blur-md transition-all duration-500 hover:bg-white hover:text-[#3d2c29] hover:shadow-2xl whitespace-nowrap"
             >
-              <span className="font-serif text-base font-semibold tracking-widest uppercase">Ver Catálogo</span>
+              <span className="font-serif text-base font-semibold tracking-widest uppercase">{locale === "en" ? "Shop Now" : "Ver Catálogo"}</span>
               <ShoppingBag className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </motion.div>
@@ -110,10 +112,10 @@ export default function Home() {
             transition={{ delay: 0.3, duration: 0.6 }}
             className="mb-4 font-serif text-4xl font-bold leading-tight text-[#3d2c29] md:text-6xl lg:text-7xl"
           >
-            El Sombrero que Define
+            {locale === "en" ? "The Hat That Defines" : "El Sombrero que Define"}
             <br />
             <span className="bg-gradient-to-r from-[#d4a5a5] to-[#c89b9b] bg-clip-text text-transparent">
-              Tu Personalidad
+              {locale === "en" ? "Your Personality" : "Tu Personalidad"}
             </span>
           </motion.h1>
 
@@ -123,9 +125,9 @@ export default function Home() {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="mx-auto mb-8 max-w-2xl text-lg text-[#3d2c29]/80 md:text-xl"
           >
-            Cada pieza es una obra maestra hecha a mano. Diseños exclusivos que combinan
-            <span className="font-semibold text-[#3d2c29]"> tradición vaquera con elegancia moderna</span>.
-            No encontrarás esto en ningún otro lugar.
+            {locale === "en"
+              ? <>Each piece is a handcrafted masterpiece. Exclusive designs that blend <span className="font-semibold text-[#3d2c29]">cowboy tradition with modern elegance</span>. You won&apos;t find this anywhere else.</>
+              : <>Cada pieza es una obra maestra hecha a mano. Diseños exclusivos que combinan <span className="font-semibold text-[#3d2c29]">tradición vaquera con elegancia moderna</span>. No encontrarás esto en ningún otro lugar.</>}
           </motion.p>
 
           <motion.div
@@ -140,15 +142,15 @@ export default function Home() {
                   <Star key={i} className="h-4 w-4 fill-[#d4a5a5] text-[#d4a5a5]" />
                 ))}
               </div>
-              <span className="font-medium">+500 clientes satisfechos</span>
+              <span className="font-medium">{locale === "en" ? "+500 happy customers" : "+500 clientes satisfechos"}</span>
             </div>
             <div className="flex items-center gap-2">
               <Heart className="h-4 w-4 fill-[#d4a5a5] text-[#d4a5a5]" />
-              <span className="font-medium">Hecho con amor</span>
+              <span className="font-medium">{locale === "en" ? "Made with love" : "Hecho con amor"}</span>
             </div>
             <div className="flex items-center gap-2">
               <Award className="h-4 w-4 text-[#d4a5a5]" />
-              <span className="font-medium">100% Artesanal</span>
+              <span className="font-medium">{locale === "en" ? "100% Handcrafted" : "100% Artesanal"}</span>
             </div>
           </motion.div>
 
@@ -161,13 +163,13 @@ export default function Home() {
             <Link href="/shop">
               <InteractiveButton variant="primary" className="flex items-center gap-2">
                 <ShoppingBag className="h-5 w-5" />
-                Comprar Ahora
+                {locale === "en" ? "Shop Now" : "Comprar Ahora"}
               </InteractiveButton>
             </Link>
             <Link href="/gallery">
               <InteractiveButton variant="secondary" className="flex items-center gap-2">
                 <Package className="h-5 w-5" />
-                Ver Colección
+                {locale === "en" ? "View Collection" : "Ver Colección"}
               </InteractiveButton>
             </Link>
           </motion.div>
@@ -178,7 +180,7 @@ export default function Home() {
             transition={{ delay: 0.8, duration: 0.6 }}
             className="mt-6 text-sm font-medium text-[#d4a5a5]"
           >
-            Solo quedan pocas unidades disponibles
+            {locale === "en" ? "Only a few units left" : "Solo quedan pocas unidades disponibles"}
           </motion.p>
         </motion.div>
       </section>
@@ -188,10 +190,10 @@ export default function Home() {
         <div className="mx-auto max-w-6xl">
           <ScrollReveal animation="fadeUp" className="mb-12 text-center">
             <h2 className="mb-4 font-serif text-4xl font-bold text-[#3d2c29] md:text-5xl">
-              Los Más Vendidos
+              {locale === "en" ? "Best Sellers" : "Los Más Vendidos"}
             </h2>
             <p className="text-lg text-[#3d2c29]/70">
-              Descubre por qué estos diseños conquistan corazones
+              {locale === "en" ? "Discover why these designs conquer hearts" : "Descubre por qué estos diseños conquistan corazones"}
             </p>
           </ScrollReveal>
 
@@ -208,11 +210,11 @@ export default function Home() {
                         className="h-full w-full object-cover"
                       />
                       <div className="absolute right-3 top-3 rounded-full bg-[#d4a5a5] px-3 py-1 text-xs font-bold text-white">
-                        {item.sales}
+                        {item.sales}+ {locale === "en" ? "sold" : "vendidos"}
                       </div>
                     </div>
                     <h3 className="mb-2 font-serif text-xl font-bold text-[#3d2c29]">{item.name}</h3>
-                    <p className="text-2xl font-bold text-[#d4a5a5]">{item.price}</p>
+                    <p className="text-2xl font-bold text-[#d4a5a5]">{formatPrice(item.priceMxn)}</p>
                   </HoverCard>
                 </Link>
               </AnimatedCard>
@@ -232,27 +234,31 @@ export default function Home() {
             <div className="grid gap-8 md:grid-cols-2 md:items-center">
               <div>
                 <h2 className="mb-6 font-serif text-4xl font-bold text-[#3d2c29] md:text-5xl">
-                  Nuestra Historia
+                  {locale === "en" ? "Our Story" : "Nuestra Historia"}
                 </h2>
                 <div className="space-y-4 text-lg text-[#3d2c29]/80">
                   <p>
-                    <span className="font-semibold text-[#3d2c29]">Estilo Vaquero</span> nació de una pasión por preservar 
-                    la tradición artesanal mexicana mientras la reinventamos para el mundo moderno.
+                    <span className="font-semibold text-[#3d2c29]">Estilo Vaquero</span>{" "}
+                    {locale === "en"
+                      ? "was born from a passion for preserving Mexican artisan tradition while reinventing it for the modern world."
+                      : "nació de una pasión por preservar la tradición artesanal mexicana mientras la reinventamos para el mundo moderno."}
                   </p>
                   <p>
-                    Cada sombrero es elaborado a mano por maestros artesanos con más de 20 años de experiencia, 
-                    utilizando técnicas ancestrales y materiales de la más alta calidad.
+                    {locale === "en"
+                      ? "Each hat is handcrafted by master artisans with over 20 years of experience, using ancestral techniques and the finest materials."
+                      : "Cada sombrero es elaborado a mano por maestros artesanos con más de 20 años de experiencia, utilizando técnicas ancestrales y materiales de la más alta calidad."}
                   </p>
                   <p>
-                    Hemos vestido a más de <span className="font-bold text-[#d4a5a5]">500 clientes satisfechos</span> que 
-                    buscan expresar su personalidad única con piezas que cuentan una historia.
+                    {locale === "en"
+                      ? <><span className="font-bold text-[#d4a5a5]">Over 500 satisfied customers</span> who seek to express their unique personality with pieces that tell a story.</>
+                      : <>Hemos vestido a más de <span className="font-bold text-[#d4a5a5]">500 clientes satisfechos</span> que buscan expresar su personalidad única con piezas que cuentan una historia.</>}
                   </p>
                 </div>
                 <Link
                   href="/about"
                   className="mt-6 inline-flex items-center gap-2 rounded-full border-2 border-[#d4a5a5] px-6 py-3 font-medium text-[#3d2c29] transition-all hover:bg-[#d4a5a5] hover:text-white"
                 >
-                  Conoce más sobre nosotros
+                  {locale === "en" ? "Learn more about us" : "Conoce más sobre nosotros"}
                 </Link>
               </div>
               <div className="relative">
@@ -274,9 +280,9 @@ export default function Home() {
         <div className="mx-auto max-w-6xl">
           <ScrollRevealStagger staggerDelay={0.2} className="grid gap-8 md:grid-cols-3">
             {[
-              { icon: Users, number: "500+", label: "Clientes Felices" },
-              { icon: Award, number: "100%", label: "Hecho a Mano" },
-              { icon: Heart, number: "20+", label: "Años de Experiencia" },
+              { icon: Users, number: "500+", label: locale === "en" ? "Happy Customers" : "Clientes Felices" },
+              { icon: Award, number: "100%", label: locale === "en" ? "Handmade" : "Hecho a Mano" },
+              { icon: Heart, number: "20+", label: locale === "en" ? "Years of Experience" : "Años de Experiencia" },
             ].map((stat, index) => (
               <ScrollReveal 
                 key={index}
@@ -301,15 +307,15 @@ export default function Home() {
           className="mx-auto max-w-4xl rounded-3xl bg-gradient-to-br from-[#d4a5a5] to-[#c89b9b] p-12 text-center shadow-2xl"
         >
           <h2 className="mb-4 font-serif text-4xl font-bold text-white md:text-5xl">
-            Encuentra Tu Estilo Único
+            {locale === "en" ? "Find Your Unique Style" : "Encuentra Tu Estilo Único"}
           </h2>
           <p className="mb-8 text-xl text-white/90">
-            Cada sombrero cuenta una historia. ¿Cuál será la tuya?
+            {locale === "en" ? "Every hat tells a story. What will yours be?" : "Cada sombrero cuenta una historia. ¿Cuál será la tuya?"}
           </p>
           <Link href="/shop">
             <InteractiveButton className="inline-flex items-center gap-2 bg-white text-[#3d2c29] shadow-xl">
               <ShoppingBag className="h-5 w-5" />
-              Explorar Colección Completa
+              {locale === "en" ? "Explore Full Collection" : "Explorar Colección Completa"}
             </InteractiveButton>
           </Link>
         </ScrollReveal>

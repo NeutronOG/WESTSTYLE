@@ -2,8 +2,10 @@
 
 import { motion } from "motion/react"
 import { Heart, Award, Users, Sparkles } from "lucide-react"
+import { useLanguage } from "@/contexts/language-context"
 
 export default function AboutPage() {
+  const { locale } = useLanguage()
   return (
     <div className="min-h-screen overflow-y-auto bg-gradient-to-br from-[#f5ebe0] via-[#faf3ed] to-[#e8ddd0] pb-32">
       <div className="fixed top-16 left-16 text-5xl text-[#3d2c29] opacity-20 pointer-events-none">✦</div>
@@ -26,10 +28,10 @@ export default function AboutPage() {
             <img src="/logo.png" alt="Estilo Vaquero" className="h-32 w-auto" />
           </motion.div>
           <h1 className="font-serif text-6xl font-bold tracking-wider text-[#3d2c29]">
-            NUESTRA HISTORIA
+            {locale === "en" ? "OUR STORY" : "NUESTRA HISTORIA"}
           </h1>
           <p className="mt-6 text-xl text-[#3d2c29]/70">
-            Artesanía tradicional con un toque moderno
+            {locale === "en" ? "Traditional craftsmanship with a modern touch" : "Artesanía tradicional con un toque moderno"}
           </p>
         </motion.div>
 
@@ -42,13 +44,20 @@ export default function AboutPage() {
           <div className="grid gap-8 md:gap-12 md:grid-cols-2 items-center">
             <div className="prose prose-lg max-w-none order-2 md:order-1">
               <p className="text-lg leading-relaxed text-[#3d2c29]/80">
-                <strong className="text-[#d4a5a5]">Estilo Vaquero</strong> nació en 2021, impulsado por la pasión por los sombreros de alta calidad fabricados en México y por el orgullo de representar el auténtico estilo vaquero.
+                <strong className="text-[#d4a5a5]">Estilo Vaquero</strong>{" "}
+                {locale === "en"
+                  ? "was born in 2021, driven by a passion for high-quality hats made in Mexico and the pride of representing the authentic cowboy style."
+                  : "nació en 2021, impulsado por la pasión por los sombreros de alta calidad fabricados en México y por el orgullo de representar el auténtico estilo vaquero."}
               </p>
               <p className="mt-6 text-lg leading-relaxed text-[#3d2c29]/80">
-                A lo largo de este camino hemos construido nuestra historia junto a nuestros clientes, enviando más de 5,000 texanas y sombreros finos a todo México y Estados Unidos, llevando en cada pieza tradición, esfuerzo y compromiso con la calidad.
+                {locale === "en"
+                  ? "Throughout this journey we have built our story alongside our customers, shipping over 5,000 texanas and fine hats across Mexico and the United States, bringing tradition, dedication and a commitment to quality in every piece."
+                  : "A lo largo de este camino hemos construido nuestra historia junto a nuestros clientes, enviando más de 5,000 texanas y sombreros finos a todo México y Estados Unidos, llevando en cada pieza tradición, esfuerzo y compromiso con la calidad."}
               </p>
               <p className="mt-6 text-lg leading-relaxed text-[#3d2c29]/80">
-                Hoy, tú también eres parte de esta historia, creciendo con nosotros y llevando un producto creado con trabajo, amor y grandes sueños.
+                {locale === "en"
+                  ? "Today, you are also part of this story, growing with us and carrying a product created with hard work, love and big dreams."
+                  : "Hoy, tú también eres parte de esta historia, creciendo con nosotros y llevando un producto creado con trabajo, amor y grandes sueños."}
               </p>
             </div>
             <motion.div
@@ -70,26 +79,26 @@ export default function AboutPage() {
           {[
             {
               icon: Heart,
-              title: "Hecho con Pasión",
-              description: "Cada pieza es creada con dedicación y amor por el oficio",
+              title: locale === "en" ? "Made with Passion" : "Hecho con Pasión",
+              description: locale === "en" ? "Each piece is created with dedication and love for the craft" : "Cada pieza es creada con dedicación y amor por el oficio",
               delay: 0.4
             },
             {
               icon: Award,
-              title: "Calidad Premium",
-              description: "Solo utilizamos los mejores materiales disponibles",
+              title: locale === "en" ? "Premium Quality" : "Calidad Premium",
+              description: locale === "en" ? "We only use the finest materials available" : "Solo utilizamos los mejores materiales disponibles",
               delay: 0.5
             },
             {
               icon: Users,
-              title: "Artesanos Expertos",
-              description: "Maestros con décadas de experiencia en el arte",
+              title: locale === "en" ? "Expert Craftsmen" : "Artesanos Expertos",
+              description: locale === "en" ? "Masters with decades of experience in the art" : "Maestros con décadas de experiencia en el arte",
               delay: 0.6
             },
             {
               icon: Sparkles,
-              title: "Diseño Único",
-              description: "Combinamos tradición con innovación contemporánea",
+              title: locale === "en" ? "Unique Design" : "Diseño Único",
+              description: locale === "en" ? "We blend tradition with contemporary innovation" : "Combinamos tradición con innovación contemporánea",
               delay: 0.7
             }
           ].map((item, index) => (
@@ -125,10 +134,10 @@ export default function AboutPage() {
           className="mt-16 overflow-hidden rounded-3xl border-2 border-[#d4a5a5]/30 bg-gradient-to-br from-[#d4a5a5]/20 to-[#d4a5a5]/5 p-12 text-center backdrop-blur-sm"
         >
           <h2 className="mb-4 font-serif text-4xl font-bold text-[#3d2c29]">
-            ¿Listo para encontrar tu estilo?
+            {locale === "en" ? "Ready to find your style?" : "¿Listo para encontrar tu estilo?"}
           </h2>
           <p className="mb-8 text-lg text-[#3d2c29]/70">
-            Explora nuestra colección y descubre el sombrero perfecto para ti
+            {locale === "en" ? "Explore our collection and find the perfect hat for you" : "Explora nuestra colección y descubre el sombrero perfecto para ti"}
           </p>
           <motion.a
             href="/shop"
@@ -136,7 +145,7 @@ export default function AboutPage() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Ver Colección
+            {locale === "en" ? "View Collection" : "Ver Colección"}
           </motion.a>
         </motion.div>
       </div>
