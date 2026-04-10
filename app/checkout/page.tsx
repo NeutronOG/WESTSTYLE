@@ -5,31 +5,44 @@ import { motion } from "motion/react"
 import { useCart } from "@/contexts/cart-context"
 import { useAuth } from "@/contexts/auth-context"
 import { useLanguage } from "@/contexts/language-context"
-import { CreditCard, Lock, CheckCircle } from "lucide-react"
+import { CreditCard, Lock } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { createOrder } from "@/lib/orders"
-import { loadStripe } from "@stripe/stripe-js"
-
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 export default function CheckoutPage() {
-  const { items, totalPrice, clearCart } = useCart()
+  const { items, totalPrice } = useCart()
   const { user, loading: authLoading } = useAuth()
-  const { locale } = useLanguage()
+  const { locale, formatPrice } = useLanguage()
   const router = useRouter()
+  const t = (es: string, en: string) => locale === "en" ? en : es
 
-  useEffect(() => {
-    if (!authLoading && !user) {
-      router.push("/login?redirect=/checkout")
-    }
-  }, [user, authLoading, router])
   const [isProcessing, setIsProcessing] = useState(false)
-  const [isComplete, setIsComplete] = useState(false)
   const [orderError, setOrderError] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     firstName: "", lastName: "", email: "", phone: "",
     address: "", city: "", postalCode: "", country: "México"
   })
+
+  // Redirigir si no autenticado
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push("/login?redirect=/checkout")
+    }
+  }, [user, authLoading, router])
+
+  // Pre-llenar email del usuario loggeado
+  useEffect(() => {
+    if (user?.email) {
+      setFormData(prev => ({ ...prev, email: user.email! }))
+    }
+  }, [user])
+
+  // Redirigir al shop si el carrito está vacío
+  useEffect(() => {
+    if (!authLoading && items.length === 0) {
+      router.push("/shop")
+    }
+  }, [items, authLoading, router])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
@@ -43,7 +56,8 @@ export default function CheckoutPage() {
     try {
       const shippingCost = formData.country === "México" ? 400 : 2000
 
-      await createOrder({
+      // Guardar orden en Supabase (no bloqueante si falla)
+      createOrder({
         customer_name: `${formData.firstName} ${formData.lastName}`,
         customer_email: formData.email,
         customer_phone: formData.phone,
@@ -59,7 +73,7 @@ export default function CheckoutPage() {
         shipping_address: `${formData.address}, ${formData.city}, ${formData.postalCode}`,
         shipping_country: formData.country,
         shipping_cost: shippingCost,
-      })
+      }).catch(() => {})  // No bloquear si Supabase falla
 
       const res = await fetch("/api/checkout", {
         method: "POST",
@@ -89,28 +103,11 @@ export default function CheckoutPage() {
     }
   }
 
-  if (isComplete) {
+  if (authLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#f5ebe0] via-[#faf3ed] to-[#e8ddd0]">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="text-center"
-        >
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-          >
-            <CheckCircle className="mx-auto mb-6 h-24 w-24 text-green-500" />
-          </motion.div>
-          <h1 className="mb-4 font-serif text-4xl font-bold text-[#3d2c29]">
-            ¡Pedido Confirmado!
-          </h1>
-          <p className="text-lg text-[#3d2c29]/70">
-            Gracias por tu compra. Recibirás un email de confirmación pronto.
-          </p>
-        </motion.div>
+        <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          className="h-10 w-10 rounded-full border-4 border-[#d4a5a5] border-t-transparent" />
       </div>
     )
   }
@@ -126,10 +123,10 @@ export default function CheckoutPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-12 text-center"
         >
-          <h1 className="font-serif text-5xl font-bold text-[#3d2c29]">CHECKOUT</h1>
+          <h1 className="font-serif text-5xl font-bold text-[#3d2c29]">{t("CHECKOUT", "CHECKOUT")}</h1>
           <p className="mt-4 flex items-center justify-center gap-2 text-[#3d2c29]/70">
             <Lock className="h-4 w-4" />
-            Pago seguro y encriptado
+            {t("Pago seguro y encriptado", "Secure encrypted payment")}
           </p>
         </motion.div>
 
@@ -142,28 +139,29 @@ export default function CheckoutPage() {
                 className="rounded-2xl border-2 border-[#d4a5a5]/30 bg-white/60 p-8 backdrop-blur-sm"
               >
                 <h2 className="mb-6 font-serif text-2xl font-bold text-[#3d2c29]">
-                  Información de Contacto
+                  {t("Información de Contacto", "Contact Information")}
                 </h2>
                 <div className="space-y-4">
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div>
-                      <label className="mb-2 block text-sm font-semibold text-[#3d2c29]">Nombre</label>
+                      <label className="mb-2 block text-sm font-semibold text-[#3d2c29]">{t("Nombre", "First name")}</label>
                       <input type="text" name="firstName" required value={formData.firstName} onChange={handleChange}
                         className="w-full rounded-xl border-2 border-[#d4a5a5]/30 bg-white px-4 py-3 text-[#3d2c29] transition-all focus:border-[#d4a5a5] focus:outline-none" />
                     </div>
                     <div>
-                      <label className="mb-2 block text-sm font-semibold text-[#3d2c29]">Apellido</label>
+                      <label className="mb-2 block text-sm font-semibold text-[#3d2c29]">{t("Apellido", "Last name")}</label>
                       <input type="text" name="lastName" required value={formData.lastName} onChange={handleChange}
                         className="w-full rounded-xl border-2 border-[#d4a5a5]/30 bg-white px-4 py-3 text-[#3d2c29] transition-all focus:border-[#d4a5a5] focus:outline-none" />
                     </div>
                   </div>
                   <div>
                     <label className="mb-2 block text-sm font-semibold text-[#3d2c29]">Email</label>
+
                     <input type="email" name="email" required value={formData.email} onChange={handleChange}
                       className="w-full rounded-xl border-2 border-[#d4a5a5]/30 bg-white px-4 py-3 text-[#3d2c29] transition-all focus:border-[#d4a5a5] focus:outline-none" />
                   </div>
                   <div>
-                    <label className="mb-2 block text-sm font-semibold text-[#3d2c29]">Teléfono</label>
+                    <label className="mb-2 block text-sm font-semibold text-[#3d2c29]">{t("Teléfono", "Phone")}</label>
                     <input type="tel" name="phone" required value={formData.phone} onChange={handleChange}
                       className="w-full rounded-xl border-2 border-[#d4a5a5]/30 bg-white px-4 py-3 text-[#3d2c29] transition-all focus:border-[#d4a5a5] focus:outline-none" />
                   </div>
@@ -177,28 +175,28 @@ export default function CheckoutPage() {
                 className="rounded-2xl border-2 border-[#d4a5a5]/30 bg-white/60 p-8 backdrop-blur-sm"
               >
                 <h2 className="mb-6 font-serif text-2xl font-bold text-[#3d2c29]">
-                  Dirección de Envío
+                  {t("Dirección de Envío", "Shipping Address")}
                 </h2>
                 <div className="space-y-4">
                   <div>
-                    <label className="mb-2 block text-sm font-semibold text-[#3d2c29]">Dirección</label>
+                    <label className="mb-2 block text-sm font-semibold text-[#3d2c29]">{t("Dirección", "Address")}</label>
                     <input type="text" name="address" required value={formData.address} onChange={handleChange}
                       className="w-full rounded-xl border-2 border-[#d4a5a5]/30 bg-white px-4 py-3 text-[#3d2c29] transition-all focus:border-[#d4a5a5] focus:outline-none" />
                   </div>
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div>
-                      <label className="mb-2 block text-sm font-semibold text-[#3d2c29]">Ciudad</label>
+                      <label className="mb-2 block text-sm font-semibold text-[#3d2c29]">{t("Ciudad", "City")}</label>
                       <input type="text" name="city" required value={formData.city} onChange={handleChange}
                         className="w-full rounded-xl border-2 border-[#d4a5a5]/30 bg-white px-4 py-3 text-[#3d2c29] transition-all focus:border-[#d4a5a5] focus:outline-none" />
                     </div>
                     <div>
-                      <label className="mb-2 block text-sm font-semibold text-[#3d2c29]">Código Postal</label>
+                      <label className="mb-2 block text-sm font-semibold text-[#3d2c29]">{t("Código Postal", "Zip Code")}</label>
                       <input type="text" name="postalCode" required value={formData.postalCode} onChange={handleChange}
                         className="w-full rounded-xl border-2 border-[#d4a5a5]/30 bg-white px-4 py-3 text-[#3d2c29] transition-all focus:border-[#d4a5a5] focus:outline-none" />
                     </div>
                   </div>
                   <div>
-                    <label className="mb-2 block text-sm font-semibold text-[#3d2c29]">País</label>
+                    <label className="mb-2 block text-sm font-semibold text-[#3d2c29]">{t("País", "Country")}</label>
                     <select name="country" value={formData.country} onChange={handleChange}
                       className="w-full rounded-xl border-2 border-[#d4a5a5]/30 bg-white px-4 py-3 text-[#3d2c29] transition-all focus:border-[#d4a5a5] focus:outline-none">
                       <option value="México">México — Envío $400</option>
@@ -248,12 +246,12 @@ export default function CheckoutPage() {
                       transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
                       className="h-5 w-5 rounded-full border-2 border-white border-t-transparent"
                     />
-                    Procesando...
+                    {t("Procesando...", "Processing...")}
                   </>
                 ) : (
                   <>
                     <Lock className="h-5 w-5" />
-                    Pagar con Stripe
+                    {t("Pagar con Stripe", "Pay with Stripe")}
                   </>
                 )}
               </motion.button>
@@ -268,7 +266,7 @@ export default function CheckoutPage() {
           >
             <div className="sticky top-8 rounded-2xl border-2 border-[#d4a5a5]/30 bg-white/60 p-8 backdrop-blur-sm">
               <h2 className="mb-6 font-serif text-2xl font-bold text-[#3d2c29]">
-                Resumen del Pedido
+                {t("Resumen del Pedido", "Order Summary")}
               </h2>
 
               <div className="mb-6 space-y-4">
@@ -282,7 +280,7 @@ export default function CheckoutPage() {
                       <p className="text-sm text-[#3d2c29]/60">
                         {item.size} • {item.color} • x{item.quantity}
                       </p>
-                      <p className="font-bold text-[#d4a5a5]">${(item.product.price * item.quantity).toFixed(2)}</p>
+                      <p className="font-bold text-[#d4a5a5]">{formatPrice(item.product.price * item.quantity)}</p>
                     </div>
                   </div>
                 ))}
@@ -290,21 +288,17 @@ export default function CheckoutPage() {
 
               <div className="space-y-3 border-t border-[#d4a5a5]/30 pt-6">
                 <div className="flex justify-between text-[#3d2c29]/70">
-                  <span>Subtotal</span>
-                  <span>${totalPrice.toFixed(2)}</span>
+                  <span>{t("Subtotal", "Subtotal")}</span>
+                  <span>{formatPrice(totalPrice)}</span>
                 </div>
                 <div className="flex justify-between text-[#3d2c29]/70">
-                  <span>Envío</span>
-                  <span className="text-green-600">Gratis</span>
-                </div>
-                <div className="flex justify-between text-[#3d2c29]/70">
-                  <span>Impuestos</span>
-                  <span>${(totalPrice * 0.16).toFixed(2)}</span>
+                  <span>{t("Envío", "Shipping")}</span>
+                  <span>{formData.country === "México" ? formatPrice(400) : formatPrice(2000)}</span>
                 </div>
                 <div className="flex justify-between border-t border-[#d4a5a5]/30 pt-3">
                   <span className="font-serif text-xl font-bold text-[#3d2c29]">Total</span>
                   <span className="font-serif text-2xl font-bold text-[#d4a5a5]">
-                    ${(totalPrice * 1.16).toFixed(2)}
+                    {formatPrice(totalPrice + (formData.country === "México" ? 400 : 2000))}
                   </span>
                 </div>
               </div>
