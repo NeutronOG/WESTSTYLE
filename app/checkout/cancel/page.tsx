@@ -1,0 +1,60 @@
+"use client"
+
+import { motion } from "motion/react"
+import { XCircle, ShoppingCart, ArrowLeft } from "lucide-react"
+import Link from "next/link"
+
+export default function CancelPage() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#f5ebe0] via-[#faf3ed] to-[#e8ddd0] px-4">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+        className="max-w-md w-full text-center"
+      >
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+          className="mb-8 flex justify-center"
+        >
+          <div className="rounded-full bg-red-50 p-6">
+            <XCircle className="h-16 w-16 text-red-400" />
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+        >
+          <img src="/logo.png" alt="Estilo Vaquero" className="mx-auto mb-6 h-20 w-auto" />
+          <h1 className="mb-3 font-serif text-4xl font-bold text-[#3d2c29]">
+            Pago Cancelado
+          </h1>
+          <p className="mb-8 text-lg text-[#3d2c29]/70">
+            Tu pedido no fue procesado. Tu carrito sigue intacto.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/cart"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#d4a5a5] px-6 py-3 font-semibold text-white shadow-lg transition-all hover:bg-[#c89b9b] hover:shadow-xl"
+            >
+              <ShoppingCart className="h-4 w-4" />
+              Volver al carrito
+            </Link>
+            <Link
+              href="/shop"
+              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-[#d4a5a5]/50 px-6 py-3 font-semibold text-[#3d2c29] transition-all hover:bg-[#d4a5a5]/10"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Seguir comprando
+            </Link>
+          </div>
+        </motion.div>
+      </motion.div>
+    </div>
+  )
+}

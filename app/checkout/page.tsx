@@ -6,6 +6,9 @@ import { useCart } from "@/contexts/cart-context"
 import { CreditCard, Lock, CheckCircle } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { createOrder } from "@/lib/orders"
+import { loadStripe } from "@stripe/stripe-js"
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 export default function CheckoutPage() {
   const { items, totalPrice, clearCart } = useCart()
@@ -29,6 +32,7 @@ export default function CheckoutPage() {
 
     try {
       const shippingCost = formData.country === "México" ? 400 : 2000
+
       await createOrder({
         customer_name: `${formData.firstName} ${formData.lastName}`,
         customer_email: formData.email,
@@ -47,14 +51,29 @@ export default function CheckoutPage() {
         shipping_cost: shippingCost,
       })
 
-      setIsComplete(true)
-      setTimeout(() => {
-        clearCart()
-        router.push("/shop")
-      }, 3000)
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: items.map(item => ({
+            product_name: item.product.name,
+            quantity: item.quantity,
+            price: item.product.price,
+            color: item.color,
+            size: item.size,
+            image: item.product.image,
+          })),
+          customerEmail: formData.email,
+          shippingCountry: formData.country,
+        }),
+      })
+
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Error al crear sesión de pago")
+
+      window.location.href = data.url
     } catch (err) {
-      setOrderError("Hubo un error al procesar tu pedido. Intenta de nuevo.")
-    } finally {
+      setOrderError(err instanceof Error ? err.message : "Hubo un error al procesar tu pedido. Intenta de nuevo.")
       setIsProcessing(false)
     }
   }
@@ -184,46 +203,17 @@ export default function CheckoutPage() {
                 transition={{ delay: 0.2 }}
                 className="rounded-2xl border-2 border-[#d4a5a5]/30 bg-white/60 p-8 backdrop-blur-sm"
               >
-                <h2 className="mb-6 flex items-center gap-2 font-serif text-2xl font-bold text-[#3d2c29]">
-                  <CreditCard className="h-6 w-6" />
-                  Información de Pago
-                </h2>
-                <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <CreditCard className="h-6 w-6 text-[#d4a5a5]" />
                   <div>
-                    <label className="mb-2 block text-sm font-semibold text-[#3d2c29]">
-                      Número de Tarjeta
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="1234 5678 9012 3456"
-                      className="w-full rounded-xl border-2 border-[#d4a5a5]/30 bg-white px-4 py-3 text-[#3d2c29] transition-all focus:border-[#d4a5a5] focus:outline-none"
-                    />
+                    <h2 className="font-serif text-xl font-bold text-[#3d2c29]">Pago Seguro con Stripe</h2>
+                    <p className="text-sm text-[#3d2c29]/60">Serás redirigido a la pasarela de pago segura de Stripe para completar tu compra.</p>
                   </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div>
-                      <label className="mb-2 block text-sm font-semibold text-[#3d2c29]">
-                        Fecha de Expiración
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        placeholder="MM/AA"
-                        className="w-full rounded-xl border-2 border-[#d4a5a5]/30 bg-white px-4 py-3 text-[#3d2c29] transition-all focus:border-[#d4a5a5] focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="mb-2 block text-sm font-semibold text-[#3d2c29]">
-                        CVV
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        placeholder="123"
-                        className="w-full rounded-xl border-2 border-[#d4a5a5]/30 bg-white px-4 py-3 text-[#3d2c29] transition-all focus:border-[#d4a5a5] focus:outline-none"
-                      />
-                    </div>
-                  </div>
+                </div>
+                <div className="mt-4 flex flex-wrap gap-3">
+                  {["visa", "mastercard", "amex"].map(card => (
+                    <span key={card} className="rounded-lg border border-[#d4a5a5]/30 bg-white px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-[#3d2c29]/60">{card}</span>
+                  ))}
                 </div>
               </motion.div>
 
@@ -252,7 +242,7 @@ export default function CheckoutPage() {
                 ) : (
                   <>
                     <Lock className="h-5 w-5" />
-                    Confirmar Pedido
+                    Pagar con Stripe
                   </>
                 )}
               </motion.button>
