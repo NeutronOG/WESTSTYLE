@@ -41,12 +41,14 @@ export function MenuIsland() {
       setIsVisible(true)
       return
     }
-    setIsVisible(false)
     const handleScroll = () => {
       const scrollY = window.scrollY
       const windowHeight = window.innerHeight
-      setIsVisible(scrollY > windowHeight * 0.6)
+      const shouldShow = scrollY > windowHeight * 0.6
+      setIsVisible(shouldShow)
+      if (!shouldShow) setIsExpanded(false)
     }
+    handleScroll()
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [pathname])
@@ -94,7 +96,7 @@ export function MenuIsland() {
               animate={{ scale: 1, opacity: 1, rotateX: 0 }}
               exit={{ scale: 0.5, opacity: 0, rotateX: 15 }}
               transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-              className="relative flex items-center gap-1 rounded-[2rem] border-2 border-[#d4a5a5]/50 bg-gradient-to-b from-[#faf3ed] to-[#f5ebe0] p-2 shadow-[0_20px_60px_-15px_rgba(212,165,165,0.5)] backdrop-blur-xl"
+              className="relative flex flex-wrap items-center justify-center gap-1 rounded-[2rem] border-2 border-[#d4a5a5]/50 bg-gradient-to-b from-[#faf3ed] to-[#f5ebe0] p-2 shadow-[0_20px_60px_-15px_rgba(212,165,165,0.5)] backdrop-blur-xl max-w-[95vw]"
             >
               <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-t from-[#d4a5a5]/10 to-transparent" />
               
@@ -226,11 +228,13 @@ export function MenuIsland() {
                 initial={{ scale: 0, y: 20 }}
                 animate={{ scale: 1, y: 0 }}
                 transition={{ delay: (menuItems.length + 3) * 0.08, type: "spring", stiffness: 400, damping: 25 }}
-                onClick={() => setIsExpanded(false)}
-                className="flex h-14 w-14 items-center justify-center rounded-2xl text-[#3d2c29] transition-all duration-300 hover:bg-[#d4a5a5]/15"
-                whileTap={{ scale: 0.9 }}
+                onClick={(e) => { e.stopPropagation(); setIsExpanded(false) }}
+                onTouchEnd={(e) => { e.stopPropagation(); setIsExpanded(false) }}
+                className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#d4a5a5]/10 text-[#3d2c29] transition-all duration-300 hover:bg-[#d4a5a5]/30 active:bg-[#d4a5a5]/40"
+                whileTap={{ scale: 0.85 }}
+                type="button"
               >
-                <X className="h-5 w-5" />
+                <X className="h-5 w-5 stroke-[2.5]" />
               </motion.button>
             </motion.div>
           ) : (
