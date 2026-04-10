@@ -7,24 +7,24 @@ import { ProductCard } from "@/components/product-card"
 import { Filter, SlidersHorizontal, Search, X } from "lucide-react"
 import { useLanguage } from "@/contexts/language-context"
 
-const CATEGORIES_ES = ["Todos", "Morcon", "Tombstone", "Laredo Hats", "Accesorios"]
-const CATEGORIES_EN = ["All", "Morcon", "Tombstone", "Laredo Hats", "Accessories"]
+// Valores internos fijos (no traducidos) para el estado
+const CATEGORY_VALUES = ["all", "Morcon", "Tombstone", "Laredo Hats", "Accesorios"]
+
+const getCategoryLabel = (value: string, locale: string) => {
+  if (value === "all") return locale === "en" ? "All" : "Todos"
+  if (value === "Accesorios") return locale === "en" ? "Accessories" : "Accesorios"
+  return value
+}
 
 export default function ShopPage() {
-  const { t, locale } = useLanguage()
-  const [selectedCategory, setSelectedCategory] = useState("Todos")
+  const { locale } = useLanguage()
+  const [selectedCategory, setSelectedCategory] = useState("all")
   const [showFilters, setShowFilters] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [isSearchOpen, setIsSearchOpen] = useState(false)
 
-  const categories = locale === "en" ? CATEGORIES_EN : CATEGORIES_ES
-  const allLabel = locale === "en" ? "All" : "Todos"
-  const accessoriesLabel = locale === "en" ? "Accessories" : "Accesorios"
-
   const filteredProducts = products.filter(product => {
-    const catMatch = selectedCategory === allLabel ||
-      product.category === selectedCategory ||
-      (selectedCategory === accessoriesLabel && product.category === "Accesorios")
+    const catMatch = selectedCategory === "all" || product.category === selectedCategory
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          product.description.toLowerCase().includes(searchQuery.toLowerCase())
     return catMatch && matchesSearch
@@ -109,22 +109,22 @@ export default function ShopPage() {
 
           {/* Categorías - scroll horizontal en móvil */}
           <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide md:flex-wrap md:overflow-visible">
-            {categories.map((category, index) => (
+            {CATEGORY_VALUES.map((value, index) => (
               <motion.button
-                key={category}
+                key={value}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.4 + index * 0.05 }}
-                onClick={() => setSelectedCategory(category)}
+                onClick={() => setSelectedCategory(value)}
                 className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-all md:px-6 md:text-base ${
-                  selectedCategory === category
+                  selectedCategory === value
                     ? "bg-[#d4a5a5] text-white shadow-lg"
                     : "border-2 border-[#d4a5a5]/40 bg-[#faf3ed]/60 text-[#3d2c29] hover:border-[#d4a5a5] hover:bg-[#d4a5a5]/20"
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                {category}
+                {getCategoryLabel(value, locale)}
               </motion.button>
             ))}
           </div>
