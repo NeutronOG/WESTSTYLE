@@ -14,6 +14,7 @@ export interface Product {
   care?: string
   descriptionEn?: string
   careEn?: string
+  stripePriceId?: string
 }
 
 export interface CartItem {

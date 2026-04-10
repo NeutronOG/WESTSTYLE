@@ -7,6 +7,7 @@ export const products: Product[] = [
     name: "Sinaloa 20X Lana Boliviana - Morcon",
     description: "Texana lana boliviana, calidad 20X, con caja de cartón incluida. Copa: 11 cm, Falda: 9 cm",
     price: 3500,
+    stripePriceId: "price_1TKVjCKqNqHXUaZTJBtxuEkV",
     image: "/Sinaloa 20x lana boliviana MORCON Texana.png",
     images: ["/Sinaloa 20x lana boliviana MORCON Texana.png"],
     category: "Morcon",
@@ -24,6 +25,7 @@ export const products: Product[] = [
     name: "Sinaloa 20X Lana Boliviana Gris Cristal - Morcon",
     description: "Texana lana boliviana, calidad 20X, con caja de cartón incluida. Copa: 11 cm, Falda: 9 cm",
     price: 3500,
+    stripePriceId: "price_1TKVjCKqNqHXUaZTt4LVQKwE",
     image: "/Sinaloa 20x MORCON gris cristal Texana.png",
     images: ["/Sinaloa 20x MORCON gris cristal Texana.png"],
     category: "Morcon",
@@ -41,6 +43,7 @@ export const products: Product[] = [
     name: "Sinaloa 20X Café - Morcon",
     description: "Texana lana boliviana, calidad 20X, con caja de cartón incluida. Copa: 11 cm, Falda: 9 cm",
     price: 3500,
+    stripePriceId: "price_1TKVjDKqNqHXUaZTyOXVjB5p",
     image: "/Sinaloa 20x MORCON Texana.png",
     images: ["/Sinaloa 20x MORCON Texana.png"],
     category: "Morcon",
@@ -58,6 +61,7 @@ export const products: Product[] = [
     name: "Este Oeste 20X - Morcon",
     description: "Texana lana boliviana, calidad 20X, con caja de cartón incluida. Copa: 11 cm, Falda: 11 cm",
     price: 3500,
+    stripePriceId: "price_1TKVjDKqNqHXUaZTstqvN8iD",
     image: "/Este oeste 20x lana boliviana MORCON Texana.png",
     images: ["/Este oeste 20x lana boliviana MORCON Texana.png"],
     category: "Morcon",
@@ -73,6 +77,7 @@ export const products: Product[] = [
   {
     id: 8,
     name: "Este Oeste Naranja 20X - Morcon",
+    stripePriceId: "price_1TKVjEKqNqHXUaZTSl0C16qb",
     description: "Texana lana boliviana, calidad 20X, con caja de cartón incluida. Copa: 11 cm, Falda: 11 cm",
     price: 3500,
     image: "/Este oeste MORCON 20x naranja Texana.png",
@@ -90,6 +95,7 @@ export const products: Product[] = [
   {
     id: 9,
     name: "Brasil Roja 20X - Morcon",
+    stripePriceId: "price_1TKVjEKqNqHXUaZTN717eaF5",
     description: "Texana lana boliviana, calidad 20X, con caja de cartón incluida. Copa: 11 cm, Falda: 9 cm",
     price: 3500,
     image: "/Brasil roja 20x MORCON Texana.png",
@@ -107,6 +113,7 @@ export const products: Product[] = [
   {
     id: 11,
     name: "Conejo 200X - Morcon",
+    stripePriceId: "price_1TKVjEKqNqHXUaZTy0OAI1sL",
     description: "Texana fina calidad 200X, pelaje de conejo, caja de cartón incluida, pluma en plata alemana personalizada. Copa: 11 cm, Falda: 9 cm",
     price: 8000,
     image: "/Este Oeste- Gris Granito.png",
@@ -124,6 +131,7 @@ export const products: Product[] = [
   {
     id: 10,
     name: "Castor 500X - Morcon",
+    stripePriceId: "price_1TKVjFKqNqHXUaZTqDPKJoPq",
     description: "Texana fina calidad 500X, pelaje de castor, estuche de viaje incluido, pluma plata alemana incluida, certificado de autenticidad. Copa: 11 cm, Falda: 9 cm",
     price: 18000,
     image: "/Los alegres del barranco 5000x TOMBSTONE Sombrero.png",
@@ -143,6 +151,7 @@ export const products: Product[] = [
   {
     id: 4,
     name: "Roper Tombstone 20X",
+    stripePriceId: "price_1TKVjFKqNqHXUaZTzeaqzeV6",
     description: "Texana Tombstone corte Roper, calidad 20X, con caja de cartón incluida. Copa: 11 cm, Falda: 11 cm",
     price: 3500,
     image: "/ROPER 20x TOMBSTONE Texana.png",
@@ -160,6 +169,7 @@ export const products: Product[] = [
   {
     id: 20,
     name: "Este Oeste Tombstone 20X",
+    stripePriceId: "price_1TKVjGKqNqHXUaZTLBxrrrKZ",
     description: "Texana Tombstone corte Este Oeste, calidad 20X, con caja de cartón incluida. Copa: 11 cm, Falda: 11 cm",
     price: 3500,
     image: "/Este oeste 20x TOMBSTONE Texana.png",
@@ -177,6 +187,7 @@ export const products: Product[] = [
   {
     id: 22,
     name: "Viejón Tombstone 20X",
+    stripePriceId: "price_1TKVjGKqNqHXUaZT7pGoXX4B",
     description: "Texana Tombstone corte Viejón, calidad 20X, con caja de cartón incluida. Copa: 12 cm, Falda: 10 cm",
     price: 3500,
     image: "/El KOMANDER TOMBSTONE Sombrero.png",
@@ -194,6 +205,7 @@ export const products: Product[] = [
   {
     id: 23,
     name: "Sinaloa Tombstone 1,000X",
+    stripePriceId: "price_1TKVjHKqNqHXUaZT3MisDh5M",
     description: "Sombrero Tombstone calidad 1,000X. Copa: 11 cm, Falda: 9 cm",
     price: 1900,
     image: "/Sinaloa 20x MORCON Texana.png",
@@ -211,6 +223,7 @@ export const products: Product[] = [
   {
     id: 12,
     name: "Sinaloa Tombstone 5,000X",
+    stripePriceId: "price_1TKVjHKqNqHXUaZTpK4NzOnK",
     description: "Sombrero Tombstone calidad 5,000X. Copa: 11 cm, Falda: 9 cm",
     price: 3800,
     image: "/Este oeste 5000x TOMBSTONE Sombrero.png",
@@ -228,6 +241,7 @@ export const products: Product[] = [
   {
     id: 16,
     name: "Sinaloa Tombstone 10,000X",
+    stripePriceId: "price_1TKVjIKqNqHXUaZTKSXbP0qn",
     description: "Sombrero Tombstone tejido a mano, calidad 10,000X, Handwoven Shantung artesanal con certificado de autenticidad",
     price: 12600,
     image: "/TOMBSTONE 10,000x.png",
@@ -247,6 +261,7 @@ export const products: Product[] = [
   {
     id: 24,
     name: "Eden Muñoz - Laredo Hats",
+    stripePriceId: "price_1TKVjIKqNqHXUaZTG8iMGK7x",
     description: "Texana de colaboración exclusiva con Eden Muñoz, calidad premium Laredo. Copa: 14 cm, Falda: 9 cm",
     price: 4500,
     image: "/Luis R Conriquez 4x Laredo Texana.png",
@@ -264,6 +279,7 @@ export const products: Product[] = [
   {
     id: 17,
     name: "Luis R Conríquez - Laredo Hats",
+    stripePriceId: "price_1TKVjIKqNqHXUaZTHHimfKPm",
     description: "Texana de colaboración exclusiva con Luis R Conríquez, calidad premium Laredo. Copa: 14 cm, Falda: 9 cm",
     price: 4500,
     image: "/Luis R Conriquez 4x Laredo Texana.png",
@@ -281,6 +297,7 @@ export const products: Product[] = [
   {
     id: 18,
     name: "Carin Leon - Laredo Hats",
+    stripePriceId: "price_1TKVjJKqNqHXUaZTZV7uc01s",
     description: "Texana de colaboración exclusiva con Carin Leon, calidad premium Laredo. Copa: 14 cm, Falda: 9 cm",
     price: 4500,
     image: "/Carin Leon 4x Laredo Texana.png",
@@ -300,6 +317,7 @@ export const products: Product[] = [
   {
     id: 19,
     name: "Toquilla Hilo de Plata",
+    stripePriceId: "price_1TKVjJKqNqHXUaZTeINWOzQW",
     description: "Toquilla tejida a mano sobre vaqueta con hilo de plata ley 925",
     price: 4800,
     image: "/TOQUILLAS HILO DE PLATA.png",
@@ -317,6 +335,7 @@ export const products: Product[] = [
   {
     id: 25,
     name: "Pluma Plata Alemana",
+    stripePriceId: "price_1TKVjKKqNqHXUaZTe7Dc8vVf",
     description: "Pluma decorativa de plata alemana para texanas, acabado artesanal",
     price: 500,
     image: "/TOQUILLAS HILO DE PLATA.png",
@@ -334,6 +353,7 @@ export const products: Product[] = [
   {
     id: 26,
     name: "Forro San Judas",
+    stripePriceId: "price_1TKVjKKqNqHXUaZTsm0AwDnl",
     description: "Forro interior decorativo con imagen de San Judas Tadeo para texanas",
     price: 300,
     image: "/logo.png",
@@ -351,6 +371,7 @@ export const products: Product[] = [
   {
     id: 15,
     name: "Espuma Limpieza para Texana",
+    stripePriceId: "price_1TKVjLKqNqHXUaZTFbGpw6Dz",
     description: "Espuma especializada para limpieza y mantenimiento de texanas",
     price: 400,
     image: "/Espuma limpieza para TEXANA.png",

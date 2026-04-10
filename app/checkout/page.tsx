@@ -72,6 +72,7 @@ export default function CheckoutPage() {
             color: item.color,
             size: item.size,
             image: item.product.image,
+            stripe_price_id: item.product.stripePriceId,
           })),
           customerEmail: formData.email,
           shippingCountry: formData.country,

@@ -20,18 +20,27 @@ export async function POST(req: NextRequest) {
       color?: string
       size?: string
       image?: string
-    }) => ({
-      price_data: {
-        currency: "mxn",
-        product_data: {
-          name: item.product_name,
-          description: [item.color, item.size].filter(Boolean).join(" · ") || undefined,
-          images: item.image ? [`${siteUrl}${item.image}`] : undefined,
+      stripe_price_id?: string
+    }) => {
+      if (item.stripe_price_id) {
+        return {
+          price: item.stripe_price_id,
+          quantity: item.quantity,
+        }
+      }
+      return {
+        price_data: {
+          currency: "mxn",
+          product_data: {
+            name: item.product_name,
+            description: [item.color, item.size].filter(Boolean).join(" · ") || undefined,
+            images: item.image ? [`${siteUrl}${item.image}`] : undefined,
+          },
+          unit_amount: Math.round(item.price * 100),
         },
-        unit_amount: Math.round(item.price * 100),
-      },
-      quantity: item.quantity,
-    }))
+        quantity: item.quantity,
+      }
+    })
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
