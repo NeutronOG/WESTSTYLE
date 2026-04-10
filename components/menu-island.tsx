@@ -83,10 +83,10 @@ export function MenuIsland() {
     >
       <motion.div 
         className="relative"
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={handleMouseLeave}
+        style={isExpanded ? {} : { rotateX, rotateY, transformStyle: "preserve-3d" }}
+        onMouseMove={isExpanded ? undefined : handleMouseMove}
+        onMouseEnter={isExpanded ? undefined : () => setIsHovered(true)}
+        onMouseLeave={isExpanded ? undefined : handleMouseLeave}
       >
         <AnimatePresence mode="wait">
           {isExpanded ? (
@@ -224,18 +224,15 @@ export function MenuIsland() {
                 </a>
               </motion.div>
 
-              <motion.button
-                initial={{ scale: 0, y: 20 }}
-                animate={{ scale: 1, y: 0 }}
-                transition={{ delay: (menuItems.length + 3) * 0.08, type: "spring", stiffness: 400, damping: 25 }}
-                onClick={(e) => { e.stopPropagation(); setIsExpanded(false) }}
-                onTouchEnd={(e) => { e.stopPropagation(); setIsExpanded(false) }}
-                className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#d4a5a5]/10 text-[#3d2c29] transition-all duration-300 hover:bg-[#d4a5a5]/30 active:bg-[#d4a5a5]/40"
-                whileTap={{ scale: 0.85 }}
+              <button
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsExpanded(false) }}
+                onPointerDown={(e) => { e.preventDefault(); e.stopPropagation(); setIsExpanded(false) }}
+                className="relative z-50 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#d4a5a5]/10 text-[#3d2c29] transition-all duration-300 hover:bg-[#d4a5a5]/30 active:scale-90 active:bg-[#d4a5a5]/40 touch-manipulation"
                 type="button"
+                aria-label="Cerrar menú"
               >
                 <X className="h-5 w-5 stroke-[2.5]" />
-              </motion.button>
+              </button>
             </motion.div>
           ) : (
             <motion.button
