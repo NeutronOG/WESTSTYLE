@@ -351,24 +351,6 @@ export const products: Product[] = [
     careEn: "Store in a dry place."
   },
   {
-    id: 26,
-    name: "Forro San Judas",
-    stripePriceId: "price_1TKVjKKqNqHXUaZTsm0AwDnl",
-    description: "Forro interior decorativo con imagen de San Judas Tadeo para texanas",
-    price: 300,
-    image: "/logo.png",
-    images: ["/logo.png"],
-    category: "Accesorios",
-    sizes: ["Única"],
-    colors: ["Multicolor"],
-    inStock: true,
-    featured: false,
-    material: "Tela bordada",
-    care: "Limpiar con paño seco.",
-    descriptionEn: "Decorative inner lining with San Judas Tadeo image for texanas",
-    careEn: "Wipe with dry cloth."
-  },
-  {
     id: 15,
     name: "Espuma Limpieza para Texana",
     stripePriceId: "price_1TKVjLKqNqHXUaZTFbGpw6Dz",
