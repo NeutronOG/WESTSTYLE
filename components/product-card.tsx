@@ -6,6 +6,8 @@ import Link from "next/link"
 import type { Product } from "@/types/product"
 import { useState } from "react"
 import { useLanguage } from "@/contexts/language-context"
+import { useCart } from "@/contexts/cart-context"
+import { toast } from "sonner"
 
 interface ProductCardProps {
   product: Product
@@ -16,6 +18,19 @@ export function ProductCard({ product, index }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [isFavorite, setIsFavorite] = useState(false)
   const { formatPrice, locale } = useLanguage()
+  const { addToCart } = useCart()
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (!product.inStock) return
+    const size = product.sizes?.[0] || "Única"
+    const color = product.colors?.[0] || "Único"
+    addToCart(product, size, color, 1)
+    toast.success(locale === "en" ? "Added to cart" : "Añadido al carrito", {
+      description: product.name,
+    })
+  }
 
   return (
     <motion.div
@@ -74,7 +89,11 @@ export function ProductCard({ product, index }: ProductCardProps) {
                   <Eye className="h-4 w-4" />
                   {locale === "en" ? "View" : "Ver"}
                 </Link>
-                <button className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#d4a5a5] py-3 font-semibold text-white transition-all hover:bg-[#3d2c29]">
+                <button
+                  onClick={handleAddToCart}
+                  disabled={!product.inStock}
+                  className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#d4a5a5] py-3 font-semibold text-white transition-all hover:bg-[#3d2c29] disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                   <ShoppingCart className="h-4 w-4" />
                   {locale === "en" ? "Add" : "Añadir"}
                 </button>
