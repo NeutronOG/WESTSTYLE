@@ -20,8 +20,12 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const { locale, formatPrice } = useLanguage()
   const t = (es: string, en: string) => locale === "en" ? en : es
 
-  const [selectedSize, setSelectedSize] = useState("")
-  const [selectedColor, setSelectedColor] = useState("")
+  const [selectedSize, setSelectedSize] = useState(() =>
+    product?.sizes?.length === 1 ? product.sizes[0] : ""
+  )
+  const [selectedColor, setSelectedColor] = useState(() =>
+    product?.colors?.length === 1 ? product.colors[0] : ""
+  )
   const [quantity, setQuantity] = useState(1)
   const [isFavorite, setIsFavorite] = useState(false)
   const [activeImg, setActiveImg] = useState(0)
