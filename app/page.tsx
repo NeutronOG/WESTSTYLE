@@ -95,16 +95,6 @@ export default function Home() {
           transition={{ duration: 0.8 }}
           className="relative z-10 max-w-4xl text-center"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.1, duration: 0.5 }}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border-2 border-[#d4a5a5]/30 bg-white/60 px-4 py-2 backdrop-blur-sm"
-          >
-            <TrendingUp className="h-4 w-4 text-[#d4a5a5]" />
-            <span className="text-sm font-medium text-[#3d2c29]">Edición Limitada 2026</span>
-          </motion.div>
-
           <motion.img
             src="/logo.png"
             alt="Estilo Vaquero"
