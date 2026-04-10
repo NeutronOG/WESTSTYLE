@@ -5,20 +5,29 @@ import { motion, AnimatePresence } from "motion/react"
 import { products } from "@/data/products"
 import { ProductCard } from "@/components/product-card"
 import { Filter, SlidersHorizontal, Search, X } from "lucide-react"
+import { useLanguage } from "@/contexts/language-context"
 
-const categories = ["Todos", "20X Lana Boliviana", "Texanas Finas", "Tombstone", "Accesorios"]
+const CATEGORIES_ES = ["Todos", "Morcon", "Tombstone", "Laredo Hats", "Accesorios"]
+const CATEGORIES_EN = ["All", "Morcon", "Tombstone", "Laredo Hats", "Accessories"]
 
 export default function ShopPage() {
+  const { t, locale } = useLanguage()
   const [selectedCategory, setSelectedCategory] = useState("Todos")
   const [showFilters, setShowFilters] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [isSearchOpen, setIsSearchOpen] = useState(false)
 
+  const categories = locale === "en" ? CATEGORIES_EN : CATEGORIES_ES
+  const allLabel = locale === "en" ? "All" : "Todos"
+  const accessoriesLabel = locale === "en" ? "Accessories" : "Accesorios"
+
   const filteredProducts = products.filter(product => {
-    const matchesCategory = selectedCategory === "Todos" || product.category === selectedCategory
+    const catMatch = selectedCategory === allLabel ||
+      product.category === selectedCategory ||
+      (selectedCategory === accessoriesLabel && product.category === "Accesorios")
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          product.description.toLowerCase().includes(searchQuery.toLowerCase())
-    return matchesCategory && matchesSearch
+    return catMatch && matchesSearch
   })
 
   return (
@@ -44,10 +53,10 @@ export default function ShopPage() {
             <img src="/logo.png" alt="Estilo Vaquero" className="h-24 w-auto" />
           </motion.div>
           <h1 className="font-serif text-5xl font-bold tracking-wider text-[#3d2c29] sm:text-6xl">
-            COLECCIÓN
+            {locale === "en" ? "COLLECTION" : "COLECCIÓN"}
           </h1>
           <p className="mt-4 text-lg text-[#3d2c29]/70">
-            Descubre nuestra exclusiva selección de sombreros artesanales
+            {locale === "en" ? "Discover our exclusive selection of handcrafted hats" : "Descubre nuestra exclusiva selección de sombreros artesanales"}
           </p>
         </motion.div>
 
@@ -65,7 +74,7 @@ export default function ShopPage() {
                 <Search className="ml-4 h-5 w-5 text-[#d4a5a5]" />
                 <input
                   type="text"
-                  placeholder="Buscar sombrero..."
+                  placeholder={locale === "en" ? "Search hats..." : "Buscar sombrero..."}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onFocus={() => setIsSearchOpen(true)}
@@ -94,7 +103,7 @@ export default function ShopPage() {
               whileTap={{ scale: 0.98 }}
             >
               <SlidersHorizontal className="h-4 w-4" />
-              <span>Filtros</span>
+              <span>{locale === "en" ? "Filters" : "Filtros"}</span>
             </motion.button>
           </div>
 
@@ -193,16 +202,16 @@ export default function ShopPage() {
           >
             <Filter className="mx-auto mb-4 h-16 w-16 text-[#d4a5a5]/50" />
             <p className="text-xl text-[#3d2c29]/70">
-              {searchQuery 
-                ? `No se encontraron resultados para "${searchQuery}"` 
-                : "No se encontraron productos en esta categoría"}
+              {searchQuery
+                ? (locale === "en" ? `No results for "${searchQuery}"` : `No se encontraron resultados para "${searchQuery}"`)
+                : (locale === "en" ? "No products found in this category" : "No se encontraron productos en esta categoría")}
             </p>
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
                 className="mt-4 rounded-full bg-[#d4a5a5] px-6 py-2 text-white hover:bg-[#c89b9b]"
               >
-                Limpiar búsqueda
+                {locale === "en" ? "Clear search" : "Limpiar búsqueda"}
               </button>
             )}
           </motion.div>

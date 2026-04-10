@@ -5,6 +5,7 @@ import { ShoppingCart, Eye, Heart } from "lucide-react"
 import Link from "next/link"
 import type { Product } from "@/types/product"
 import { useState } from "react"
+import { useLanguage } from "@/contexts/language-context"
 
 interface ProductCardProps {
   product: Product
@@ -14,6 +15,7 @@ interface ProductCardProps {
 export function ProductCard({ product, index }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [isFavorite, setIsFavorite] = useState(false)
+  const { formatPrice, locale } = useLanguage()
 
   return (
     <motion.div
@@ -53,7 +55,7 @@ export function ProductCard({ product, index }: ProductCardProps) {
               animate={{ x: 0 }}
               className="absolute left-0 top-4 bg-[#d4a5a5] px-4 py-1 text-xs font-bold text-white"
             >
-              DESTACADO
+              {locale === "en" ? "FEATURED" : "DESTACADO"}
             </motion.div>
           )}
 
@@ -70,11 +72,11 @@ export function ProductCard({ product, index }: ProductCardProps) {
                   className="flex flex-1 items-center justify-center gap-2 rounded-full bg-white/95 py-3 font-semibold text-[#3d2c29] backdrop-blur-sm transition-all hover:bg-[#d4a5a5] hover:text-white"
                 >
                   <Eye className="h-4 w-4" />
-                  Ver
+                  {locale === "en" ? "View" : "Ver"}
                 </Link>
                 <button className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#d4a5a5] py-3 font-semibold text-white transition-all hover:bg-[#3d2c29]">
                   <ShoppingCart className="h-4 w-4" />
-                  Añadir
+                  {locale === "en" ? "Add" : "Añadir"}
                 </button>
               </motion.div>
             )}
@@ -98,9 +100,8 @@ export function ProductCard({ product, index }: ProductCardProps) {
           <div className="flex items-center justify-between">
             <div>
               <span className="font-serif text-2xl font-bold text-[#d4a5a5]">
-                ${product.price}
+                {formatPrice(product.price)}
               </span>
-              <span className="ml-1 text-sm text-[#3d2c29]/50">USD</span>
             </div>
             
             <div className="flex gap-1">
@@ -124,12 +125,12 @@ export function ProductCard({ product, index }: ProductCardProps) {
           {product.inStock ? (
             <div className="mt-4 flex items-center gap-2 text-xs text-green-600">
               <div className="h-2 w-2 rounded-full bg-green-600" />
-              En stock
+              {locale === "en" ? "In Stock" : "En stock"}
             </div>
           ) : (
             <div className="mt-4 flex items-center gap-2 text-xs text-red-600">
               <div className="h-2 w-2 rounded-full bg-red-600" />
-              Agotado
+              {locale === "en" ? "Out of Stock" : "Agotado"}
             </div>
           )}
         </div>

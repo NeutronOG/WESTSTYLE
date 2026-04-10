@@ -3,7 +3,9 @@ import type { Metadata } from "next"
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { CartProvider } from "@/contexts/cart-context"
+import { LanguageProvider } from "@/contexts/language-context"
 import { MenuIsland } from "@/components/menu-island"
+import { LanguageSwitcher } from "@/components/language-switcher"
 import { Footer } from "@/components/footer"
 import { Toaster } from "sonner"
 import "./globals.css"
@@ -34,13 +36,16 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`font-sans antialiased`}>
-        <CartProvider>
-          {children}
-          <Footer />
-          <MenuIsland />
-          <Toaster position="top-center" richColors />
-          <Analytics />
-        </CartProvider>
+        <LanguageProvider>
+          <CartProvider>
+            <LanguageSwitcher />
+            {children}
+            <Footer />
+            <MenuIsland />
+            <Toaster position="top-center" richColors />
+            <Analytics />
+          </CartProvider>
+        </LanguageProvider>
       </body>
     </html>
   )
